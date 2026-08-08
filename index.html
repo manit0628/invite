@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shivam Chaudhary - Gaming Invitation</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #030712;
+    color: white;
+}
+
+/* Animated background */
+.scene {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1200px;
+    background:
+        radial-gradient(circle at 50% 40%, #123c5b 0%, #071522 35%, #02050a 75%);
+}
+
+/* Neon lights */
+.light {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: .55;
+    animation: pulse 4s infinite alternate;
+}
+
+.light.one {
+    width: 350px;
+    height: 350px;
+    background: #00d9ff;
+    top: -100px;
+    left: -100px;
+}
+
+.light.two {
+    width: 300px;
+    height: 300px;
+    background: #ff4b00;
+    right: -100px;
+    bottom: -80px;
+    animation-delay: 1s;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); opacity: .35; }
+    to { transform: scale(1.25); opacity: .65; }
+}
+
+/* 3D floor */
+.floor {
+    position: absolute;
+    width: 180%;
+    height: 70%;
+    left: -40%;
+    bottom: -38%;
+    transform: rotateX(65deg);
+    background:
+        linear-gradient(rgba(0,220,255,.18) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(0,220,255,.18) 2px, transparent 2px);
+    background-size: 70px 70px;
+    animation: floorMove 2s linear infinite;
+    opacity: .5;
+}
+
+@keyframes floorMove {
+    from { background-position: 0 0; }
+    to { background-position: 0 70px; }
+}
+
+/* Particles */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #00d9ff;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(110vh) translateX(0) scale(.3);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    100% {
+        transform: translateY(-20vh) translateX(100px) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* Main card */
+.card {
+    position: absolute;
+    width: min(90%, 850px);
+    min-height: 520px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+    transform-style: preserve-3d;
+
+    padding: 55px 40px;
+    text-align: center;
+
+    background: linear-gradient(
+        145deg,
+        rgba(12, 27, 42, .92),
+        rgba(2, 8, 15, .86)
+    );
+
+    border: 1px solid rgba(0,220,255,.5);
+    border-radius: 28px;
+
+    box-shadow:
+        0 0 30px rgba(0,217,255,.25),
+        inset 0 0 40px rgba(0,217,255,.04);
+
+    backdrop-filter: blur(12px);
+
+    transition: transform .15s ease-out;
+}
+
+/* Card glow */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 30px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00d9ff,
+        transparent,
+        #ff4b00,
+        transparent
+    );
+    z-index: -1;
+    filter: blur(12px);
+    opacity: .55;
+    animation: borderGlow 4s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Top label */
+.badge {
+    display: inline-block;
+    padding: 9px 22px;
+    border: 1px solid #00d9ff;
+    border-radius: 50px;
+    color: #00eaff;
+    letter-spacing: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00d9ff;
+    box-shadow: 0 0 15px rgba(0,217,255,.25);
+    animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+    50% { box-shadow: 0 0 30px rgba(0,217,255,.55); }
+}
+
+/* Heading */
+h1 {
+    margin-top: 28px;
+    font-size: clamp(42px, 8vw, 90px);
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+
+    color: white;
+
+    text-shadow:
+        3px 3px 0 #007c9e,
+        0 0 20px #00d9ff,
+        0 0 50px rgba(0,217,255,.7);
+
+    animation: titleFloat 3s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Player name */
+.player {
+    margin-top: 12px;
+    font-size: clamp(26px, 5vw, 48px);
+    font-weight: 800;
+    letter-spacing: 3px;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        white,
+        #ff7b00
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: nameGlow 2s infinite alternate;
+}
+
+@keyframes nameGlow {
+    from {
+        filter: drop-shadow(0 0 4px #00eaff);
+    }
+    to {
+        filter: drop-shadow(0 0 18px #ff6500);
+    }
+}
+
+.subtitle {
+    margin-top: 18px;
+    color: #b8d6e6;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+/* Divider */
+.line {
+    width: 60%;
+    height: 2px;
+    margin: 30px auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00d9ff,
+        #ff5a00,
+        transparent
+    );
+    box-shadow: 0 0 15px #00d9ff;
+}
+
+/* Details */
+.details {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.detail {
+    min-width: 160px;
+    padding: 15px 25px;
+    border-left: 2px solid #00d9ff;
+    background: rgba(0,217,255,.05);
+}
+
+.detail small {
+    display: block;
+    color: #7894a5;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.detail strong {
+    display: block;
+    margin-top: 6px;
+    color: white;
+    font-size: 18px;
+}
+
+/* Button */
+.join {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 15px 42px;
+    border: none;
+    border-radius: 5px;
+
+    background: linear-gradient(
+        90deg,
+        #00bfe8,
+        #0078ff
+    );
+
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 3px;
+
+    box-shadow:
+        0 0 15px #00d9ff,
+        0 0 35px rgba(0,217,255,.4);
+
+    animation: buttonPulse 1.7s infinite;
+}
+
+@keyframes buttonPulse {
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 35px #00d9ff;
+    }
+}
+
+/* Scan lines */
+.scanlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,.02) 0px,
+        rgba(255,255,255,.02) 1px,
+        transparent 1px,
+        transparent 5px
+    );
+
+    mix-blend-mode: overlay;
+}
+
+/* Mobile */
+@media(max-width:600px) {
+    .card {
+        min-height: auto;
+        padding: 40px 20px;
+    }
+
+    .details {
+        gap: 12px;
+    }
+
+    .detail {
+        min-width: 130px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+
+    <div class="light one"></div>
+    <div class="light two"></div>
+
+    <div class="floor"></div>
+
+    <!-- Floating particles -->
+    <div class="particle" style="left:5%;animation-duration:7s"></div>
+    <div class="particle" style="left:15%;animation-duration:9s;animation-delay:2s"></div>
+    <div class="particle" style="left:25%;animation-duration:6s;animation-delay:1s"></div>
+    <div class="particle" style="left:35%;animation-duration:10s;animation-delay:3s"></div>
+    <div class="particle" style="left:48%;animation-duration:8s"></div>
+    <div class="particle" style="left:60%;animation-duration:7s;animation-delay:2s"></div>
+    <div class="particle" style="left:72%;animation-duration:11s"></div>
+    <div class="particle" style="left:84%;animation-duration:8s;animation-delay:1s"></div>
+    <div class="particle" style="left:95%;animation-duration:6s"></div>
+
+    <!-- Invitation -->
+    <div class="card" id="card">
+
+        <div class="badge">BATTLE INVITATION</div>
+
+        <h1>DROP IN</h1>
+
+        <div class="player">
+            SHIVAM CHAUDHARY
+        </div>
+
+        <p class="subtitle">
+            Get Ready • Gear Up • Dominate the Battleground
+        </p>
+
+        <div class="line"></div>
+
+        <div class="details">
+
+            <div class="detail">
+                <small>MISSION</small>
+                <strong>Battle Royale</strong>
+            </div>
+
+            <div class="detail">
+                <small>PLAYER</small>
+                <strong>Shivam</strong>
+            </div>
+
+            <div class="detail">
+                <small>STATUS</small>
+                <strong>READY TO DROP</strong>
+            </div>
+
+        </div>
+
+        <div class="join">
+            JOIN THE BATTLE
+        </div>
+
+    </div>
+
+    <div class="scanlines"></div>
+
+</div>
+
+<script>
+/* 3D mouse movement */
+const card = document.getElementById("card");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = (window.innerWidth / 2 - e.clientX) / 35;
+    const y = (window.innerHeight / 2 - e.clientY) / 35;
+
+    card.style.transform =
+        `translate(-50%, -50%) rotateX(${y}deg) rotateY(${-x}deg)`;
+});
+
+/* Reset 3D effect */
+document.addEventListener("mouseleave", () => {
+    card.style.transform =
+        "translate(-50%, -50%) rotateX(0deg) rotateY(0deg)";
+});
+
+/* Extra touch effect for mobile */
+document.addEventListener("touchmove", (e) => {
+
+    const touch = e.touches[0];
+
+    const x = (window.innerWidth / 2 - touch.clientX) / 35;
+    const y = (window.innerHeight / 2 - touch.clientY) / 35;
+
+    card.style.transform =
+        `translate(-50%, -50%) rotateX(${y}deg) rotateY(${-x}deg)`;
+});
+</script>
+
+</body>
+</html>
